@@ -6,13 +6,25 @@ import numpy as np
 
 class VegetationIndexCalculator:
   def __init__(self, tiff_image_path):
+    self.exclude_methods = [
+      '__doc__', '__init__', '__module__',
+      'exclude_methods', 'profile', 'mask',
+      'green', 'red', 'red_edge', 'nir',
+      'tiff_image_path'
+    ]
     self.tiff_image_path = tiff_image_path
 
     with rasterio.open(self.tiff_image_path) as src:
+      self.profile = src.profile.copy()
       self.green = src.read(1).astype('f4')
       self.red = src.read(2).astype('f4')
       self.red_edge = src.read(3).astype('f4')
       self.nir = src.read(4).astype('f4')
+
+    # generate mask image from red band
+    self.mask = np.copy(self.red)
+    self.mask[self.mask > 0.0] = 1.0 # all actual pixels have a value of 1.0
+    self.mask[self.mask == 0.0] = 'nan' # border values have no value 'nan'
 
   def ndvi(self):
     return (self.nir - self.red) / (self.nir + self.red)
@@ -58,7 +70,7 @@ class VegetationIndexCalculator:
     return (self.nir/self.red_edge)-1.0
 
   def ctvi(self):
-    return ((self.ndvi+0.5)/(np.absolute(self.ndvi+0.5)))+np.sqrt(np.absolute(self.ndvi+0.5))
+    return ((self.ndvi()+0.5)/(np.absolute(self.ndvi()+0.5)))+np.sqrt(np.absolute(self.ndvi()+0.5))
 
   def cvi(self):
     return self.nir*(self.red/self.green**2)
@@ -105,7 +117,7 @@ class VegetationIndexCalculator:
 
   # https://www.harrisgeospatial.com/docs/BroadbandGreenness.html
   def lai(self):
-    return 3.618*self.evi22-0.118
+    return 3.618*self.evi22()-0.118
 
   def lci(self):
     return (self.nir-self.red_edge)/(self.nir-self.red)
@@ -199,7 +211,7 @@ class VegetationIndexCalculator:
     return 3*( (self.nir-self.red_edge) -0.2*(self.nir-self.green) *(self.nir/self.red_edge))
 
   def tcari_osavi(self):
-    return self.tcari/self.osavi1
+    return self.tcari()/self.osavi1()
 
   def tci(self):
     return 1.2*(self.red_edge-self.green) -1.5*(self.red-self.green)+np.sqrt(self.red_edge/self.red)
@@ -226,7 +238,7 @@ class VegetationIndexCalculator:
     return (0.1*self.nir-self.red)/(0.1*self.nir+self.red)
 
   def mcari_mtvi2(self):
-    return self.mcari/self.mtvi2
+    return self.mcari()/self.mtvi2()
 
   def mcari_osavi(self):
-    return self.mcari/self.osavi2
+    return self.mcari()/self.osavi2()
