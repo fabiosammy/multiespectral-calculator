@@ -40,7 +40,7 @@ if __name__ == "__main__":
           'nodata': None
         })
 
-        vegetation_indexes = [method for method in dir(vic) if method not in vic.exclude_methods]
+        vegetation_indexes = [method for method in dir(VegetationIndexCalculator) if method not in VegetationIndexCalculator.exclude_methods()]
         for vegetation_index in vegetation_indexes:
           # print(vegetation_index)
           vegetation_index_image_name = vegetation_index + '_' + str(counter) + '_' + image

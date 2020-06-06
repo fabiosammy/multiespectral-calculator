@@ -5,13 +5,16 @@ import rasterio
 import numpy as np
 
 class VegetationIndexCalculator:
-  def __init__(self, tiff_image_path):
-    self.exclude_methods = [
+  @staticmethod
+  def exclude_methods():
+    return [
       '__doc__', '__init__', '__module__',
       'exclude_methods', 'profile', 'mask',
       'green', 'red', 'red_edge', 'nir',
       'tiff_image_path'
     ]
+
+  def __init__(self, tiff_image_path):
     self.tiff_image_path = tiff_image_path
 
     with rasterio.open(self.tiff_image_path) as src:
@@ -164,7 +167,7 @@ class VegetationIndexCalculator:
   def ndre(self):
     return (self.nir-self.red_edge) / (self.nir+self.red_edge)
 
-  def ndrdi(self):
+  def ngrdi(self):
     return (self.green-self.red_edge) / (self.green+self.red_edge)
 
   def nli(self):
