@@ -3,6 +3,7 @@
 
 import rasterio
 import numpy as np
+import matplotlib.pyplot as plt
 
 class VegetationIndexCalculator:
   @staticmethod
@@ -28,6 +29,15 @@ class VegetationIndexCalculator:
     self.mask = np.copy(self.red)
     self.mask[self.mask > 0.0] = 1.0 # all actual pixels have a value of 1.0
     self.mask[self.mask == 0.0] = 'nan' # border values have no value 'nan'
+
+  def plotter(self, index_name, index):
+    plt.figure()
+    plt.imshow(index, cmap='RdYlGn')
+    plt.colorbar()
+    plt.title(index_name)
+    plt.xlabel('Column #')
+    plt.ylabel('Row #')
+    plt.savefig('./plots/' + index_name + '.png')
 
   def ndvi(self):
     return (self.nir - self.red) / (self.nir + self.red)

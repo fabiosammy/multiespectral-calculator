@@ -9,7 +9,9 @@ import rasterio
 from vegetation_index_calculator import VegetationIndexCalculator
 from config import *
 
-def save_index_image(profile, index_image, dst_file_path):
+def save_index_image(profile, index_image, dst_file_path, mask = None):
+  if not mask is None:
+    index_image = index_image * mask
   with rasterio.open(dst_file_path, 'w', **profile) as dst:
     dst.write_band(1, index_image)
 
@@ -47,4 +49,6 @@ if __name__ == "__main__":
           save_in = os.path.join(amostra_id_calculated_images_path, vegetation_index_image_name)
           index_image = getattr(vic, vegetation_index)()
           save_index_image(vic.profile, index_image, save_in)
+          # save_index_image(vic.profile, index_image, save_in, vic.mask)
+          # vic.plotter(amostra_id + '-' + vegetation_index, index_image)
         counter += 1
