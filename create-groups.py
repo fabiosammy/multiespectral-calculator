@@ -67,6 +67,8 @@ if __name__ == "__main__":
       
       for amostra_id in limiar_group['amostras']:
         src_images_path = os.path.join(stacked_images_path, '90m', amostra_id)
+        if not os.path.exists(src_images_path):
+          continue
         if not os.path.exists(limiar_soil_path):
           continue
         dst_images_path = os.path.join(limiar_soil_path, amostra_id)
