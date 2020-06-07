@@ -4,7 +4,7 @@
 import sys
 import os
 import csv
-from itertools import chain, combinations
+from itertools import permutations
 import rasterio
 import numpy as np
 import cv2
@@ -13,10 +13,7 @@ from vegetation_index_calculator import VegetationIndexCalculator
 from config import *
 
 def combinate_indexes(vegetation_indexes):
-  # return [list(zip(x,list2)) for x in itertools.permutations(list1,len(list2))]
-  # return chain(*[combinations(vegetation_indexes,i+1) for i,_ in enumerate(vegetation_indexes)])
-  # return chain.from_iterable(combinations(vegetation_indexes, r) for r in range(len(vegetation_indexes)+1))
-  return combinations(vegetation_indexes, 3)
+  return permutations(vegetation_indexes, 3)
 
 def load_vegetation_indexes():
   vegetation_indexes = []
