@@ -12,14 +12,16 @@ csv_database = 'amostras-table-database.csv'
 # Criar a augmentation base em ./images/agudos/06-augmentation/<altitude>/amostra-id/<roi-counter>.TIF
 # Criar as classes em ./images/agudos/07-to-classify/<class-agrupation>/<new-counter>.TIF
 
-images_path = './images/agudos/sequoia/'
+captured_region = 'vo'
+
+images_path = './images/' + captured_region + '/sequoia/'
 # altitudes = ['10m', '30m', '60m', '90m']
 altitudes = ['90m']
 regions = ['Reg1', 'Reg2', 'Reg3']
-aligned_images_path = './images/agudos/01-aligned'
-selected_images_path = './images/agudos/02-selected'
-roi_images_path = './images/agudos/03-roi'
-calculated_images_path = './images/agudos/04-calculated'
-stacked_images_path = './images/agudos/05-stacked'
-augmentation_images_path = './images/agudos/06-augmentation'
-to_classify_images_path = './images/agudos/07-to-classify'
+aligned_images_path      = './images/' + captured_region + '/01-aligned'
+selected_images_path     = './images/' + captured_region + '/02-selected'
+roi_images_path          = './images/' + captured_region + '/03-roi'
+calculated_images_path   = './images/' + captured_region + '/04-calculated'
+stacked_images_path      = './images/' + captured_region + '/05-stacked'
+augmentation_images_path = './images/' + captured_region + '/06-augmentation'
+to_classify_images_path  = './images/' + captured_region + '/07-to-classify'
