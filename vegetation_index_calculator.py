@@ -12,7 +12,7 @@ class VegetationIndexCalculator:
       '__doc__', '__init__', '__module__',
       'exclude_methods', 'profile', 'mask',
       'green', 'red', 'red_edge', 'nir',
-      'tiff_image_path'
+      'tiff_image_path', 'plotter'
     ]
 
   def __init__(self, tiff_image_path):
