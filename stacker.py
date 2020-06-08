@@ -81,7 +81,7 @@ if __name__ == "__main__":
           index_2 = load_index(amostra_id_calculated_images_path, combined_index[1], amostra_id)
           index_3 = load_index(amostra_id_calculated_images_path, combined_index[2], amostra_id)
 
-          output_path = os.path.join(stacked_images_path, altitude, amostra_id)
+          output_path = os.path.join(stacked_images_path, altitude, amostra_id, combined_index[0])
           if not os.path.exists(output_path):
             os.makedirs(output_path)
           output_image_filename = str(id_counter) + '.png'
