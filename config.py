@@ -12,7 +12,8 @@ csv_database = 'amostras-table-database.csv'
 # Criar a augmentation base em ./images/agudos/06-augmentation/<altitude>/amostra-id/<roi-counter>.TIF
 # Criar as classes em ./images/agudos/07-to-classify/<class-agrupation>/<new-counter>.TIF
 
-captured_region = 'train'
+#captured_region = 'train'
+captured_region = 'test'
 
 images_path = './images/' + captured_region + '/sequoia/'
 # altitudes = ['10m', '30m', '60m', '90m']
